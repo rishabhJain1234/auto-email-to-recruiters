@@ -21,8 +21,8 @@ def extract_text_from_pdf(pdf_path):
 
 
 def send_email(email_id, actual_email, subject):
-            sender_email = st.secrets("EMAIL")
-            sender_password = st.secrets("PASSWORD")
+            sender_email = st.secrets["EMAIL"]
+            sender_password = st.secrets["PASSWORD"]
 
             msg = MIMEMultipart()
             msg['From'] = sender_email
@@ -31,7 +31,7 @@ def send_email(email_id, actual_email, subject):
 
             msg.attach(MIMEText(actual_email, 'plain'))
             
-            with open(st.secrets("resume_path"), "rb") as attachment:
+            with open(st.secrets["resume_path"], "rb") as attachment:
                 part = MIMEBase("application", "octet-stream")
                 part.set_payload(attachment.read())
                 encoders.encode_base64(part)
@@ -56,7 +56,7 @@ def send_email(email_id, actual_email, subject):
                 
                 
 def get_response_from_openai(resume_text, job_description):
-    client = OpenAI()
+    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
     messages = [
     {"role": "system", "content": "You are a helpful AI assistant.You will be given a resume and a job description. You need to generate an email response to the job description based on the resume."},
     {

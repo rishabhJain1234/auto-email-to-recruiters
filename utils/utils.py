@@ -21,8 +21,8 @@ def extract_text_from_pdf(pdf_path):
 
 
 def send_email(email_id, actual_email, subject):
-            sender_email = os.getenv("EMAIL")
-            sender_password = os.getenv("PASSWORD")
+            sender_email = st.secrets("EMAIL")
+            sender_password = st.secrets("PASSWORD")
 
             msg = MIMEMultipart()
             msg['From'] = sender_email
@@ -31,7 +31,7 @@ def send_email(email_id, actual_email, subject):
 
             msg.attach(MIMEText(actual_email, 'plain'))
             
-            with open(os.getenv("resume_path"), "rb") as attachment:
+            with open(st.secrets("resume_path"), "rb") as attachment:
                 part = MIMEBase("application", "octet-stream")
                 part.set_payload(attachment.read())
                 encoders.encode_base64(part)

@@ -18,7 +18,7 @@ def main():
     job_description = st.text_area("Enter Job Description")
     
     if st.button("Submit"):
-        resume_text = extract_text_from_pdf(os.getenv("resume_path"))
+        resume_text = extract_text_from_pdf(st.secrets("resume_path"))
         generated_email = get_response_from_openai(resume_text, job_description)
         st.session_state.editable_email = generated_email  # Store the generated email in session state
     
